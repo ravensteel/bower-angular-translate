@@ -477,7 +477,7 @@ angular.module('pascalprecht.translate').provider('$translate', [
         var determineTranslation = function (translationId, interpolateParams, interpolationId) {
           var deferred = $q.defer();
           var table = $uses ? $translationTable[$uses] : $translationTable, Interpolator = interpolationId ? interpolatorHashMap[interpolationId] : defaultInterpolator;
-          if (table && table.hasOwnProperty(translationId)) {
+          if (table && table[translationId]) {
             var translation = table[translationId];
             if (translation.substr(0, 2) === '@:') {
               $translate(translation.substr(2), interpolateParams, interpolationId).then(deferred.resolve, deferred.reject);
