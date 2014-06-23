@@ -414,7 +414,7 @@ angular.module('pascalprecht.translate').provider('$translate', [
         var getFallbackTranslation = function (langKey, translationId, interpolateParams, Interpolator) {
           var deferred = $q.defer();
           getTranslationTable(langKey).then(function (translationTable) {
-            if (translationTable.hasOwnProperty(translationId)) {
+            if (translationTable[translationId]) {
               Interpolator.setLocale(langKey);
               deferred.resolve(Interpolator.interpolate(translationTable[translationId], interpolateParams));
               Interpolator.setLocale($uses);
@@ -426,7 +426,7 @@ angular.module('pascalprecht.translate').provider('$translate', [
         };
         var getFallbackTranslationInstant = function (langKey, translationId, interpolateParams, Interpolator) {
           var result, translationTable = $translationTable[langKey];
-          if (translationTable.hasOwnProperty(translationId)) {
+          if (translationTable[translationId]) {
             Interpolator.setLocale(langKey);
             result = Interpolator.interpolate(translationTable[translationId], interpolateParams);
             Interpolator.setLocale($uses);
@@ -502,7 +502,7 @@ angular.module('pascalprecht.translate').provider('$translate', [
         };
         var determineTranslationInstant = function (translationId, interpolateParams, interpolationId) {
           var result, table = $uses ? $translationTable[$uses] : $translationTable, Interpolator = interpolationId ? interpolatorHashMap[interpolationId] : defaultInterpolator;
-          if (table && table.hasOwnProperty(translationId)) {
+          if (table && table[translationId]) {
             var translation = table[translationId];
             if (translation.substr(0, 2) === '@:') {
               result = determineTranslationInstant(translation.substr(2), interpolateParams, interpolationId);
